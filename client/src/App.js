@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-const api_base = 'http://localhost:3001';
+const api_base = 'https://mern-tasktracker.onrender.com';
 
 function App() {
 	const [todos, setTodos] = useState([]);
@@ -10,11 +10,18 @@ function App() {
 		GetTodos();
 	}, []);
 
-	const GetTodos = () => {
-		fetch(api_base + '/todos')
-			.then(res => res.json())
-			.then(data => setTodos(data))
-			.catch((err) => console.error("Error: ", err));
+	const GetTodos = async () => {
+		
+		try{
+			let res = await fetch(api_base + '/todos')
+			res = await res.json()
+			console.log(res);
+			setTodos(res)
+		}
+		catch(err){
+			console.log(err);
+		}
+			
 	}
 
 	const completeTodo = async id => {
